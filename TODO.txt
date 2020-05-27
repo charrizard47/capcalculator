@@ -1,0 +1,32 @@
+make app call calculator (done)
+
+add a button that adds new sem (done)
+
+display all modules (done)
+
+store all module codes and grades 
+and sem in calculator (kinda)
+
+add new semester everytime the
+new sem button is pressed (done)
+
+add new modules (done)
+
+rerender everytime i update the
+module list (done)
+
+print the modules (done) 
+
+fix sem input (done)
+
+Store values in async (done)
+
+fix load data (done)
+
+fucking fix the fked up load data (done)
+//always returns null value fking hell
+
+implement count cap algo (fk yes)
+//need to call countcap everytime add new mod
+
+fix new sem when load ()
