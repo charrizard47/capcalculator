@@ -6,7 +6,7 @@ class Storage extends Component {
   async storeData(key, item) {
     try {
       var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
-      alert("data saved at" );
+      alert("Modules saved." );
       return jsonOfItem;
     } catch (error) {
       alert("error")
@@ -25,6 +25,7 @@ class Storage extends Component {
         .then((value) => {
           this.props.loadModule(JSON.parse(value));
         });
+        alert("Modules loaded.")
       
     } catch (error) {
       alert("error");
@@ -34,7 +35,7 @@ class Storage extends Component {
   async removeData(key) {
     try {
       await AsyncStorage.removeItem(key);
-      alert("remove item");
+      alert("All modules cleared.");
     } catch {
       alert("error");
     }
@@ -42,20 +43,24 @@ class Storage extends Component {
 
   render() {
     return(
-      <View style={styles.buttonContainer}>
-          <Text>{this.props.data}</Text>
+      <View style={styles.container}>
+        <View style={styles.buttonContainer}>
           <Button 
             onPress={
               () => this.storeData("key", this.props.data)
             }
             title="save"
           />
+        </View>
+        <View>
           <Button 
             onPress={
               () => this.retrieveData("key")
             }
             title="load"
           />
+        </View>
+        <View>
           <Button 
             onPress={
               () => this.removeData("key")
@@ -63,23 +68,19 @@ class Storage extends Component {
             title="clear"
           />
         </View>
+      </View>   
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderTopWidth: 50
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
-  buttonContainer: {
-    flexDirection: 'row'
-  },
-  semester: {
-    fontSize: 24
-    
-  },
-  cap: {
-    fontSize: 24
-  },
-});
+  
+
+
+  
+});1
 export default Storage;

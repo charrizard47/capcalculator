@@ -7,44 +7,45 @@ class Semester extends Component {
 
   //displays all module in this sem
   renderModule() {
-
+  
+  const data = this.props.data;
+  const numOfMod = data.length;
   const moduleString = [];
-  const period = this.props.period;
-  const code = this.props.code;
-  const grade = this.props.grade;
   var sems = 0;
     
-  for (var i=0; i<this.props.numOfMod; i++) {
-    const p = period[i];
+  for (var i=0; i<numOfMod; i++) {
+    const p = data[i][0];
     if (p > sems) {
       sems = p;
     }
   }
-  console.log(sems+1);
-  for (var j=1; j<Number(sems)+1; j++) {
+  if (data != null || numOfMod > 1) {
+    for (var j=1; j<Number(sems)+1; j++) {
 
-    var year = Math.ceil(j / 2);
-    var sem = "";
+      var year = Math.ceil(j / 2);
+      var sem = "";
 
-    if (j % 2 == 0) {
-      sem = "2";
-    } else {
-      sem = "1";
-    }
+      if (j % 2 == 0) {
+        sem = "2";
+      } else {
+        sem = "1";
+      }
 
-    var yearsem = "Year " + year + " Semester " + sem;
-    moduleString.push(<Text>{yearsem}</Text>)
+      var yearsem = "Year " + year + " Semester " + sem;
+      moduleString.push(<Text>{yearsem}</Text>)
 
-    for (var i = 0; i < this.props.numOfMod; i++) {
-      const p = period[i];
-      if (p == j) {
-        const c = code[i];
-        const g = grade[i];
-        const string = c + ": " + g;
-        moduleString.push(<Text>{string}</Text>)
+      for (var i = 0; i < numOfMod; i++) {
+        const p = data[i][0];
+        if (p == j) {
+          const c = data[i][1];
+          const g = data[i][2];
+          const string = c + ": " + g;
+          moduleString.push(<Text>{string}</Text>)
+        }
       }
     }
   }
+  
   return (
       moduleString
     )

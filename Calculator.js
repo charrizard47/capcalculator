@@ -20,9 +20,6 @@ class Calculator extends Component {
     this.state = {
 
       //mod info
-      period: [],
-      code: [],
-      grade: [],
       moduleData: [],
 
       //info
@@ -44,55 +41,98 @@ class Calculator extends Component {
     })
   }
 
-  addModule = (period, code, grade) => {
-
-    const newperiod = this.state.period.concat(period);
-    const newcode = this.state.code.concat(code);
-    const newgrade = this.state.grade.concat(grade);
-    var totalcap = 0;
+  addModule = (module) => {
+    const numOfMod = this.state.moduleData.length;
+    var totalcap = Number(module[2]);
     
-    for (var i=0; i<newgrade.length; i++) {
-      totalcap += Number(newgrade[i]);
-    }
-    const newcap = totalcap / newgrade.length;
+    var newData = [];
+    if (numOfMod != 0) {
+      for (var i=0; i<numOfMod; i++) {
+        totalcap += Number(this.state.moduleData[i][2]);
+        newData.push(this.state.moduleData[i]);
 
+      }
+    }
+    newData.push(module);
+
+    const newcap = totalcap / (numOfMod+1);
     this.setState({  
-      period: newperiod,
-      code: newcode,
-      grade: newgrade,
-      numOfMod: this.state.numOfMod+1,
-      
-      moduleData: [newperiod, newcode, newgrade, this.state.numOfSem, this.state.numOfMod +1],
+      moduleData: newData,
       cap: newcap,
     })
   }
 
+  editModule = (module) => {
+    const data = this.state.moduleData;
+    const numOfMod = data.length;
+    var totalcap = Number(module[2]);
+    
+    var newData = [];
+    if (numOfMod != 0) {
+      for (var i=0; i<numOfMod; i++) {
+        console.log(module[1]);
+        if (module[1] == data[i][1]) {
+          newData.push(module);
+        } else {
+          totalcap += Number(data[i][2]);
+          newData.push(data[i]);
+        }
+      }
+    }
+
+    const newcap = totalcap / (numOfMod);
+    this.setState({  
+      moduleData: newData,
+      cap: newcap,
+    })
+  }
+
+  deleteModule = (code) => {
+    const data = this.state.moduleData;
+    const numOfMod = data.length;
+    var totalcap = 0;
+    var newData = [];
+
+    if (numOfMod != 0) {
+      for (var i=0; i<numOfMod; i++) {
+        if (code == data[i][1]) {
+          //do nothing
+        } else {
+          totalcap += Number(data[i][2]);
+          newData.push(data[i]);
+        }
+      }
+    }
+
+    const newcap = totalcap / (numOfMod);
+    this.setState({  
+      moduleData: newData,
+      cap: newcap,
+    })
+  }
+
+  
 
   updateState = (data) => {
     //console.log(data);
     if (data != null) {
       this.setState({
-        period: data[0],
-        code: data[1],
-        grade: data[2],
-        numOfSem: data[3],
-        numOfMod: data[4],
-        moduleData: data,
+        moduleData: this.state.moduleData.concat(data),
       });
       this.updateCap();
     } else {
-      alert("no data saved");
+      alert("No saved data.");
     }
   }
 
   updateCap() {
+    data = this.state.moduleData;
     var totalcap = 0;
     
-    for (var i=0; i<this.state.numOfMod; i++) {
-      totalcap += Number(this.state.grade[i]);
-      console.log(totalcap);
+    for (var i=0; i<data.length; i++) {
+      totalcap += Number(data[i][2]);
     }
-    const newcap = totalcap / this.state.numOfMod;
+    const newcap = totalcap / data.length;
     
     this.setState({
       cap: newcap,
@@ -104,12 +144,7 @@ class Calculator extends Component {
       <View style={styles.container}>
         
         {<Semester
-          modules = {this.state.modules}
-          period = {this.state.period}
-          code = {this.state.code}
-          grade = {this.state.grade}
-          numOfSem = {this.state.numOfSem}
-          numOfMod = {this.state.numOfMod}
+          data = {this.state.moduleData}
         />}
 
         <Text style={styles.cap}>
@@ -124,9 +159,13 @@ class Calculator extends Component {
         />
 
         {this.state.showAddModule && 
-          <Module  addNewModule={this.addModule}/>}
+          <Module  
+          addNewModule={this.addModule}
+          editModule={this.editModule}
+          deleteModule={this.deleteModule}
+          />}
        
-        {<Storage 
+        {<Storage style={styles.storage}
           loadModule = {this.updateState}
           data = {this.state.moduleData}
         />}
@@ -140,8 +179,10 @@ class Calculator extends Component {
 }
 
 const styles = StyleSheet.create({
+
   container: {
-    borderTopWidth: 50
+    borderTopWidth: 50,
+    borderColor: 'darkturquoise'
   },
   buttonContainer: {
     flexDirection: 'row'
@@ -151,8 +192,13 @@ const styles = StyleSheet.create({
     
   },
   cap: {
+
     fontSize: 24
   },
+  storage: {
+    position: "absolute",
+    bottom: 0,
+  }
 });
 
 export default Calculator;
