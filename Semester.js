@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {
-  Text
+  Text,
+  ScrollView,
+  View,
 } from 'react-native';
 
 class Semester extends Component {
@@ -32,7 +34,7 @@ class Semester extends Component {
       }
 
       var yearsem = "Year " + year + " Semester " + sem;
-      moduleString.push(<Text>{yearsem}</Text>)
+      moduleString.push(<Text style={{fontSize: 20, fontWeight: "bold"}}>{yearsem}</Text>)
 
       for (var i = 0; i < numOfMod; i++) {
         const p = data[i][0];
@@ -47,13 +49,18 @@ class Semester extends Component {
   }
   
   return (
-      moduleString
+    moduleString
+      
     )
 }
 
   render() {
+    
     return (
-      this.renderModule()
+      <View style={{padding: 10}}>
+        {this.renderModule()}
+      </View>
+      
     )
   }
 }

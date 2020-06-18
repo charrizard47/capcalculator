@@ -9,6 +9,9 @@ import {
   Input,
   TextInput,
   AsyncStorage,
+  SafeAreaView,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import Semester from './Semester';
 import Module from './Module';
@@ -35,9 +38,15 @@ class Calculator extends Component {
     };
   }
 
-  showAddModule() {
+  showPlusButton() {
     this.setState({
       showAddModule: true
+    })
+  }
+
+  hidePlusButton() {
+    this.setState({
+      showAddModule: false
     })
   }
 
@@ -60,6 +69,8 @@ class Calculator extends Component {
       moduleData: newData,
       cap: newcap,
     })
+
+    this.hidePlusButton();
   }
 
   editModule = (module) => {
@@ -85,6 +96,7 @@ class Calculator extends Component {
       moduleData: newData,
       cap: newcap,
     })
+    this.hidePlusButton();
   }
 
   deleteModule = (code) => {
@@ -102,6 +114,7 @@ class Calculator extends Component {
           newData.push(data[i]);
         }
       }
+      this.hidePlusButton();
     }
 
     const newcap = totalcap / (numOfMod);
@@ -139,24 +152,33 @@ class Calculator extends Component {
     })
   }
 
+
   render() {
+    const screenHeight = Dimensions.get('window').height;
+
     return (
       <View style={styles.container}>
         
-        {<Semester
-          data = {this.state.moduleData}
+        {<
+          Semester 
+          style={styles.semester}
+          data={this.state.moduleData}
+          
         />}
 
         <Text style={styles.cap}>
           {"CAP: " + this.state.cap.toString()}
         </Text>
 
-        <Button 
+        <View style={styles.plusButton}>
+          <Button 
           onPress = {
-            () => this.showAddModule()
+            () => this.showPlusButton()
           }
-          title="Add Module"
+          title="+"
         />
+        </View>
+        
 
         {this.state.showAddModule && 
           <Module  
@@ -165,11 +187,13 @@ class Calculator extends Component {
           deleteModule={this.deleteModule}
           />}
        
-        {<Storage style={styles.storage}
+       <View style={styles.storageButton}>
+         {<Storage 
           loadModule = {this.updateState}
           data = {this.state.moduleData}
         />}
-
+       </View>
+       
 
 
       </View>
@@ -181,24 +205,38 @@ class Calculator extends Component {
 const styles = StyleSheet.create({
 
   container: {
+    flex: 1,
     borderTopWidth: 50,
+    borderBottomWidth: 50,
     borderColor: 'darkturquoise'
-  },
-  buttonContainer: {
-    flexDirection: 'row'
-  },
-  semester: {
-    fontSize: 24
     
   },
+  
   cap: {
-
-    fontSize: 24
-  },
-  storage: {
+    padding: 10,
+    fontSize: 24,
     position: "absolute",
     bottom: 0,
+  },
+  storageButton: {
+    padding: 5,
+    position: 'absolute',
+    right: 0,
+
+    bottom: 0,
+  },
+  plusButton: {
+    padding: 20,
+    position: 'absolute',
+    right: 0,
+  },
+
+  //semester
+  
+  semester: {
+    padding: 10,
   }
+
 });
 
 export default Calculator;

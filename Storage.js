@@ -44,7 +44,7 @@ class Storage extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <View style={styles.buttonContainer}>
+        <View style={styles.button}>
           <Button 
             onPress={
               () => this.storeData("key", this.props.data)
@@ -52,7 +52,7 @@ class Storage extends Component {
             title="save"
           />
         </View>
-        <View>
+        <View style={styles.button}>
           <Button 
             onPress={
               () => this.retrieveData("key")
@@ -60,7 +60,7 @@ class Storage extends Component {
             title="load"
           />
         </View>
-        <View>
+        <View style={styles.button}>
           <Button 
             onPress={
               () => this.removeData("key")
@@ -76,8 +76,11 @@ class Storage extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center'
   },
+  button: {
+    flexGrow: 1,
+  }
   
 
 
