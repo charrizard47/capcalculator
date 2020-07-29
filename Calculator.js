@@ -167,7 +167,7 @@ class Calculator extends Component {
         />}
 
         <Text style={styles.cap}>
-          {"CAP: " + this.state.cap.toString()}
+          {"CAP: " + this.state.cap.toFixed(2).toString()}
         </Text>
 
         <View style={styles.plusButton}>

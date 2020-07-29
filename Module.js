@@ -36,7 +36,7 @@ class Module extends Component {
           />
           <TextInput 
             style={{height: 40, borderColor: 'black', borderWidth: 2}}
-            placeholder="Module"
+            placeholder="Module Code"
             onChangeText={(text) => this.setState({inputcode: text})}
           />
           <TextInput 

@@ -29,4 +29,43 @@ fucking fix the fked up load data (done)
 implement count cap algo (fk yes)
 //need to call countcap everytime add new mod
 
-fix new sem when load ()
+fix new sem when load (done)
+
+------ functions are correct --------
+
+add some sanity checks
+- check loaded data (done)
+
+update sem output (done)
+
+shifted module to new class (done)
+
+ITS ALL WORKING AGAIN except storage
+
+update semester algo (done)
+
+make storage work (done)
+
+edit the data structure of modules (done)
+//done for semester
+
+add delete function (done)
+  
+add edit function (done)
+
+---------- v1.4 -------------------
+improve the UI
+- edit position of info and buttons ()
+- show the right stuff ()
+
+upload to app store? ()
+
+this.props.loadModule(retrieveData("key"));
+
+make grade options? ()
+
+
+
+
+
+
